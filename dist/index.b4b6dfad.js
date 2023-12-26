@@ -27326,21 +27326,21 @@ const MainView = ()=>{
         {
             id: 1,
             title: "The Dark Knight",
-            image: "/Users/chasepolyak/careerfoundry/MyFlix-Client2/src/components/mainview/img/TheDarkKnight.jpg",
+            image: "https://moviesmedia.ign.com/movies/image/object/752/752133/DomBatpod_OneSheet.jpg?width=300&auto=webp&dpr=2",
             director: "Christopher Nolan",
             genre: "Action"
         },
         {
             id: 2,
             title: "Dunkirk",
-            image: "",
+            image: "https://assets1.ignimgs.com/2017/06/07/dunkirk-ver2-xlg-1496872985565.jpg?width=300&auto=webp&dpr=2",
             director: "Christopher Nolan",
             genre: "Drama"
         },
         {
             id: 3,
             title: "Lady Bird",
-            image: "",
+            image: "https://assets1.ignimgs.com/2017/11/27/lady-bird-ver2-xlg-1511811839534.jpg?width=300&auto=webp&dpr=2",
             director: "Greta Gerwig",
             genre: "Comedy"
         }
@@ -27378,7 +27378,7 @@ const MainView = ()=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "6KN6idUsy6ZMnBjPw6mPfmxJPqg=");
+_s(MainView, "RSsj7g2HS4Smoppjx4esY9vyA5Q=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
