@@ -1,32 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import {MovieCard} from "../moviecard/MovieCard";
 import {MovieView} from "../movieview/MovieView";
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "The Dark Knight",
-      image: "https://moviesmedia.ign.com/movies/image/object/752/752133/DomBatpod_OneSheet.jpg?width=300&auto=webp&dpr=2",
-     director: "Christopher Nolan",
-     genre: "Action",
-    },
-    {
-      id: 2,
-      title: "Dunkirk",
-      image:
-        "https://assets1.ignimgs.com/2017/06/07/dunkirk-ver2-xlg-1496872985565.jpg?width=300&auto=webp&dpr=2",
-     director: "Christopher Nolan",
-     genre: "Drama"
-    },
-    {
-      id: 3,
-      title: "Lady Bird",
-      image:
-        "https://assets1.ignimgs.com/2017/11/27/lady-bird-ver2-xlg-1511811839534.jpg?width=300&auto=webp&dpr=2",
-     director: "Greta Gerwig",
-     genre: "Comedy",
-    }
-  ]);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies")
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi = data.docs.map((doc) => {
+          return {
+            id: doc.key,
+            title: doc.title,
+          
+            author: doc.author_name?.[0]
+          };
+        });
+
+        setMovies(moviesFromApi);
+      });
+  }, []);
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
