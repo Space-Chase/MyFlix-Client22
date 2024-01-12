@@ -8,12 +8,14 @@ export const MainView = () => {
     fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        const moviesFromApi = data.map((doc) => {
           return {
-            id: doc.key,
-            title: doc.title,
-          
-            author: doc.author_name?.[0]
+            id: doc._id,
+            title:doc.title,
+            director: doc.details.director,
+            directorBio: doc.director_bio,
+            genre: doc.details.genre,
+            image: doc.Image
           };
         });
 
