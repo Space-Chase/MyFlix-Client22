@@ -1,6 +1,8 @@
 import { useState, useEffect} from "react";
 import {MovieCard} from "../moviecard/MovieCard";
 import {MovieView} from "../movieview/MovieView";
+import { LoginView } from "../loginview/LoginView";
+import { SignupView } from "../signupview/SignUpView";
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
 
@@ -22,6 +24,20 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, []);
+
+  if (!user) {
+    return (
+      <>
+        <LoginView onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }} />
+        or
+        <SignupView />
+      </>
+    );
+  }
+  
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
