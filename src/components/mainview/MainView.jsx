@@ -1,49 +1,61 @@
-import { useState, useEffect} from "react";
-import {MovieCard} from "../moviecard/MovieCard";
-import {MovieView} from "../movieview/MovieView";
+import { useState, useEffect } from "react";
+import { MovieCard } from "../moviecard/MovieCard";
+import { MovieView } from "../movieview/MovieView";
 import { LoginView } from "../loginview/LoginView";
 import { SignupView } from "../signupview/SignUpView";
+
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
-
+  const [user, setUser] = useState();
+  const [token, setToken] = useState(null); 
   useEffect(() => {
-    fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies")
-      .then((response) => response.json())
-      .then((data) => {
-        const moviesFromApi = data.map((doc) => {
-          return {
-            id: doc._id,
-            title:doc.title,
-            director: doc.details.director,
-            directorBio: doc.director_bio,
-            genre: doc.details.genre,
-            image: doc.Image
-          };
-        });
+    if (token) {
+      fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const moviesFromApi = data.map((doc) => {
+            return {
+              id: doc._id,
+              title: doc.title,
+              director: doc.details.director,
+              directorBio: doc.director_bio,
+              genre: doc.details.genre,
+              image: doc.Image,
+            };
+          });
 
-        setMovies(moviesFromApi);
-      });
-  }, []);
+          setMovies(moviesFromApi);
+        });
+    }
+  }, [token]); // Only make the API call when the token changes
 
   if (!user) {
     return (
       <>
-        <LoginView onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }} />
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
         or
         <SignupView />
       </>
     );
   }
-  
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   if (selectedMovie) {
     return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <MovieView
+        movie={selectedMovie}
+        onBackClick={() => setSelectedMovie(null)}
+      />
     );
   }
 
@@ -65,3 +77,4 @@ export const MainView = () => {
     </div>
   );
 };
+

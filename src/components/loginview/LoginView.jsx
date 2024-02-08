@@ -4,25 +4,32 @@ export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    // this prevents the default behavior of the form which is to reload the entire page
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = {
-      access: username,
-      secret: password
-    };
+    
+      const data = {
+        Username: username,
+        Password: password
+      };
 
-    fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/login?", {
-      method: "POST",
-      body: JSON.stringify(data)
-    }).then((response) => {
+      const response = await fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
       if (response.ok) {
-        onLoggedIn(user.data);
+        const userData = await response.json();
+        onLoggedIn(userData); 
+        setUsername("username");
+        setPassword("password");
       } else {
-        alert("Login failed");
+        alert("Login failed. Please check your credentials.");
       }
-    });
+    
   };
 
   return (
@@ -47,3 +54,4 @@ export const LoginView = ({ onLoggedIn }) => {
     </form>
   );
 };
+
