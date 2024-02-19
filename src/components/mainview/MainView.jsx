@@ -31,7 +31,7 @@ export const MainView = () => {
           setMovies(moviesFromApi);
         });
     }
-  }, [token]); // Only make the API call when the token changes
+  }, []); 
 
   if (!user) {
     return (

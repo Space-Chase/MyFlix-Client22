@@ -29,7 +29,7 @@ export const LoginView = ({ onLoggedIn }) => {
       } else {
         alert("Login failed. Please check your credentials.");
       }
-    
+    console.log(LoginResponse)
   };
 
   return (
