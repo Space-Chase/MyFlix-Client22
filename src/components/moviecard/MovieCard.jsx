@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import propTypes from "prop-types"
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
     <div
@@ -14,14 +14,14 @@ export const MovieCard = ({ movie, onMovieClick }) => {
 
 
 
-MovieCard.PropTypes = {
-  movie: PropTypes.shape ({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    directorBio: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    image: PropTypes.string
+MovieCard.propTypes = {
+  movie: propTypes.shape ({
+    id: propTypes.string.isRequired,
+    title: propTypes.string.isRequired,
+    director: propTypes.string.isRequired,
+    directorBio: propTypes.string.isRequired,
+    genre: propTypes.string.isRequired,
+    image: propTypes.string
 
 
 

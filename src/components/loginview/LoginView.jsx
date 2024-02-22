@@ -21,15 +21,19 @@ export const LoginView = ({ onLoggedIn }) => {
         body: JSON.stringify(data),
       });
 
+      
+
       if (response.ok) {
         const userData = await response.json();
-        onLoggedIn(userData); 
+        console.log(userData);
+        localStorage.setItem("user", JSON.stringify(userData.user));
+        localStorage.setItem("token", userData.token);
+        onLoggedIn(userData.user, userData.token); 
         setUsername("username");
         setPassword("password");
       } else {
         alert("Login failed. Please check your credentials.");
       }
-    console.log(LoginResponse)
   };
 
   return (
