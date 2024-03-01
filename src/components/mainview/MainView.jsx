@@ -1,56 +1,98 @@
-import { useState } from "react";
-import {MovieCard} from "../moviecard/MovieCard";
-import {MovieView} from "../movieview/MovieView";
-export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "The Dark Knight",
-      image: "https://moviesmedia.ign.com/movies/image/object/752/752133/DomBatpod_OneSheet.jpg?width=300&auto=webp&dpr=2",
-     director: "Christopher Nolan",
-     genre: "Action",
-    },
-    {
-      id: 2,
-      title: "Dunkirk",
-      image:
-        "https://assets1.ignimgs.com/2017/06/07/dunkirk-ver2-xlg-1496872985565.jpg?width=300&auto=webp&dpr=2",
-     director: "Christopher Nolan",
-     genre: "Drama"
-    },
-    {
-      id: 3,
-      title: "Lady Bird",
-      image:
-        "https://assets1.ignimgs.com/2017/11/27/lady-bird-ver2-xlg-1511811839534.jpg?width=300&auto=webp&dpr=2",
-     director: "Greta Gerwig",
-     genre: "Comedy",
-    }
-  ]);
+import { useState, useEffect } from "react";
+import { MovieCard } from "../moviecard/MovieCard";
+import { MovieView } from "../movieview/MovieView";
+import { LoginView } from "../loginview/LoginView";
+import { SignupView } from "../signupview/SignUpView";
 
+export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  if (selectedMovie) {
-    return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-    );
-  }
+  useEffect(() => {
+    if (token) {
+      fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const moviesFromApi = data.map((doc) => {
+            return {
+              id: doc._id,
+              title: doc.title,
+              director: doc.details.director,
+              directorBio: doc.director_bio,
+              genre: doc.details.genre,
+              image: doc.Image,
+            };
+          });
 
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
+          setMovies(moviesFromApi);
+        });
+    }
+  }, [token]);
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+  }, [user, token]);
 
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
-        />
-      ))}
-    </div>
+    <>
+      {!user ? (
+        <>
+          <LoginView
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+          or
+          <SignupView />
+        </>
+      ) : (
+        <>
+          {selectedMovie ? (
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={() => setSelectedMovie(null)}
+            />
+          ) : (
+            <>
+              {movies.length === 0 ? (
+                <div>The list is empty!</div>
+              ) : (
+                <div>
+                  {movies.map((movie) => (
+                    <MovieCard
+                      key={movie.id}
+                      movie={movie}
+                      onMovieClick={(newSelectedMovie) => {
+                        setSelectedMovie(newSelectedMovie);
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+              <button
+                onClick={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.removeItem("user");
+                  localStorage.removeItem("token");
+                }}
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </>
+      )}
+    </>
   );
 };
