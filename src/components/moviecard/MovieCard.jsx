@@ -1,6 +1,12 @@
 import propTypes from "prop-types"
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
+
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
+    <Container>
+      <Row classname="justify-content-md-center">
+      <Col md={3}>
+        <Card>
     <div
       onClick={() => {
         onMovieClick(movie);
@@ -8,6 +14,10 @@ export const MovieCard = ({ movie, onMovieClick }) => {
     >
       {movie.title}
     </div>
+    </Card>
+    </Col>
+    </Row>
+    </Container>
   );
 };
 

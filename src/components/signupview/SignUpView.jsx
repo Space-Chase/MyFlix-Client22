@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -37,13 +38,21 @@ export const SignupView = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Container>
+          <form onSubmit={handleSubmit}>
+
+      <Row className="justify-content-md-center">
+        <Col md={6}>
+        <Card>
+            <Card.Body>
+              <Card.Title>Sign-Up</Card.Title>
       <label>
         Username:
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="form-control"
         />
       </label>
       <label>
@@ -52,6 +61,7 @@ export const SignupView = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="form-control"
         />
       </label>
       <label>
@@ -60,6 +70,7 @@ export const SignupView = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="form-control"
         />
       </label>
       <label>
@@ -68,9 +79,70 @@ export const SignupView = () => {
           type="date"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
+          className="form-control"
         />
       </label>
-      <button type="submit">Submit</button>
+      <Button type="submit" variant="primary">
+        Submit 
+        </Button>
+      </Card.Body>
+      </Card>  
+    </Col>
+    </Row>
     </form>
+
+    </Container>
   );
 };
+
+/*return (
+  <Container>
+  <Form onSubmit={handleSubmit}>
+    <Form.Row>
+      <Form.Group as={Col} controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group as={Col} controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+      <Form.Group as={Col} controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group as={Col} controlId="formBirthday">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control
+          type="date"
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+        />
+      </Form.Group>
+    </Form.Row>
+
+    <Button variant="primary" type="submit">
+      Submit
+    </Button>
+  </Form>
+  </Container>
+);
+};*/
+

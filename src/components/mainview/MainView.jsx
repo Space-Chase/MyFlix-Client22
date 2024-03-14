@@ -3,6 +3,8 @@ import { MovieCard } from "../moviecard/MovieCard";
 import { MovieView } from "../movieview/MovieView";
 import { LoginView } from "../loginview/LoginView";
 import { SignupView } from "../signupview/SignUpView";
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
+
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -52,7 +54,7 @@ export const MainView = () => {
               setToken(token);
             }}
           />
-          or
+          
           <SignupView />
         </>
       ) : (
@@ -79,7 +81,8 @@ export const MainView = () => {
                   ))}
                 </div>
               )}
-              <button
+            
+              <Button type="submit" variant="primary" 
                 onClick={() => {
                   setUser(null);
                   setToken(null);
@@ -87,8 +90,14 @@ export const MainView = () => {
                   localStorage.removeItem("token");
                 }}
               >
+                  <Container>
+                  <Col md={3} >
+                  <Row classname="justify-content-md-center">
                 Logout
-              </button>
+                </Row>
+                </Col>
+                </Container>
+              </Button>
             </>
           )}
         </>
