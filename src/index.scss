@@ -1,7 +1,27 @@
+$primary: rgb(47, 71, 119);
+$body-bg-start: rgb(45, 116, 76);
+$body-bg-end: rgb(126, 183, 175);
+$theme-colors: (
+  "secondary": rgb(3, 61, 32),
+  "primary": rgb(254, 180, 212),
+);
 
-$color: rgb(26, 32, 198);
+@import "~bootstrap/scss/bootstrap.scss";
 
-.my-flix {
-  color: $color;
+body {
+  background: linear-gradient(to right, $body-bg-start, $body-bg-end);
 }
 
+button.btn.btn-secondary {
+  border-color: black;
+}
+button.btn.btn-primary {
+  border-color: black;
+}
+.card {
+  background-color: rgb(132, 189, 166);
+  border-color: black;
+}
+.form-control {
+  border-color: black;
+}

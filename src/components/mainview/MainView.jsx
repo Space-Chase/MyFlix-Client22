@@ -5,7 +5,6 @@ import { LoginView } from "../loginview/LoginView";
 import { SignupView } from "../signupview/SignUpView";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 
-
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -45,63 +44,60 @@ export const MainView = () => {
   }, [user, token]);
 
   return (
-    <>
+    <Row>
       {!user ? (
-        <>
+        <Row>
           <LoginView
             onLoggedIn={(user, token) => {
               setUser(user);
               setToken(token);
             }}
           />
-          
           <SignupView />
-        </>
+        </Row>
+      ) : selectedMovie ? (
+        <Row>
+          <MovieView
+            movie={selectedMovie}
+            onBackClick={() => setSelectedMovie(null)}
+          />
+        </Row>
+      ) : movies.length === 0 ? (
+        <Row>
+          <div>The list is empty!</div>
+        </Row>
       ) : (
-        <>
-          {selectedMovie ? (
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={() => setSelectedMovie(null)}
+        <Row>
+          {movies.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onMovieClick={(newSelectedMovie) => {
+                setSelectedMovie(newSelectedMovie);
+              }}
             />
-          ) : (
-            <>
-              {movies.length === 0 ? (
-                <div>The list is empty!</div>
-              ) : (
-                <div>
-                  {movies.map((movie) => (
-                    <MovieCard
-                      key={movie.id}
-                      movie={movie}
-                      onMovieClick={(newSelectedMovie) => {
-                        setSelectedMovie(newSelectedMovie);
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            
-              <Button type="submit" variant="primary" 
-                onClick={() => {
-                  setUser(null);
-                  setToken(null);
-                  localStorage.removeItem("user");
-                  localStorage.removeItem("token");
-                }}
-              >
-                  <Container>
-                  <Col md={3} >
-                  <Row classname="justify-content-md-center">
-                Logout
-                </Row>
-                </Col>
-                </Container>
-              </Button>
-            </>
-          )}
-        </>
+          ))}
+        </Row>
       )}
-    </>
+      {user && (
+        <Row>
+          <Col xl={12} md={11} className="d-flex justify-content-center">
+            <Button
+              class="logout-btn"
+              type="submit"
+              variant="secondary"
+              onClick={() => {
+                setUser(null);
+                setToken(null);
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+              }}
+            >
+              Logout
+            </Button>
+          </Col>
+        </Row>
+      )}
+    </Row>
   );
 };
