@@ -3,6 +3,10 @@ import { MovieCard } from "../moviecard/MovieCard";
 import { MovieView } from "../movieview/MovieView";
 import { LoginView } from "../loginview/LoginView";
 import { SignupView } from "../signupview/SignUpView";
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { ProfileView } from "../profile-view/profile-view";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -11,6 +15,8 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const onLoggedOut = () => {
+  };
 
   useEffect(() => {
     if (token) {
@@ -42,44 +48,77 @@ export const MainView = () => {
     localStorage.setItem("token", token);
   }, [user, token]);
 
+
   return (
-    <>
-      {!user ? (
-        <>
-          <LoginView
-            onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }}
-          />
-          or
-          <SignupView />
-        </>
-      ) : (
-        <>
-          {selectedMovie ? (
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={() => setSelectedMovie(null)}
+    <BrowserRouter>
+      <NavigationBar
+        user={user}
+        setUser={setUser}
+        setToken={setToken}
+        onLoggedOut={onLoggedOut} />
+      <Routes>
+        <Route path="/login" element={!user ? (
+          <>
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
             />
-          ) : (
-            <>
-              {movies.length === 0 ? (
-                <div>The list is empty!</div>
-              ) : (
-                <div>
-                  {movies.map((movie) => (
-                    <MovieCard
-                      key={movie.id}
-                      movie={movie}
-                      onMovieClick={(newSelectedMovie) => {
-                        setSelectedMovie(newSelectedMovie);
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-              <button
+          </>
+        ) : (
+          <Navigate to="/" replace />
+        )} />
+
+        <Route path="/signup" element={!user ? (
+          <>
+
+            <SignupView />
+          </>
+        ) : (
+          <Navigate to="/" replace />
+        )} />
+
+<Route path="/profile" element={!user ? (
+          <>
+
+            <SignupView />
+          </>
+        ) : (
+          <ProfileView 
+          user={user} 
+          setUser={setUser}/>
+        )} />
+
+        
+
+        <Route path="/" element={user ? (
+          <>
+            {selectedMovie ? (
+              <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+              />
+            ) : movies.length === 0 ? (
+              <div>The list is empty!</div>
+            ) : (
+              <div>
+                {movies.map((movie) => (
+                  <MovieCard
+                    key={movie.id}
+                    movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                      setSelectedMovie(newSelectedMovie);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+            <div xl={12} md={11} className="d-flex justify-content-center">
+              <Button
+                className="logout-btn"
+                type="submit"
+                variant="secondary"
                 onClick={() => {
                   setUser(null);
                   setToken(null);
@@ -88,11 +127,13 @@ export const MainView = () => {
                 }}
               >
                 Logout
-              </button>
-            </>
-          )}
-        </>
-      )}
-    </>
+              </Button>
+            </div>
+          </>
+        ) : (
+          <Navigate to="/login" replace />
+        )} />
+      </Routes>
+    </BrowserRouter>
   );
 };
