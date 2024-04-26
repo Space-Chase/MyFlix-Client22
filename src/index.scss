@@ -24,6 +24,12 @@ button.btn.btn-primary:hover {
   background-color: #4f3e3e;
 }
 
+.btn-danger {
+  background-color: black;
+  color: rgb(168, 61, 61);
+  text-transform: uppercase;
+}
+
 .card {
   background-color: rgb(189, 179, 132);
   border-color: black;
@@ -32,3 +38,8 @@ button.btn.btn-primary:hover {
 .form-control {
   border-color: black;
 }
+
+h6 { 
+  text-decoration: underline;
+}
+

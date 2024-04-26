@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 export const SignupView = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");

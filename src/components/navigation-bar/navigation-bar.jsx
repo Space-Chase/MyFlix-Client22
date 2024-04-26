@@ -45,18 +45,12 @@ export const NavigationBar = ({ user, setUser, setToken }) => {
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const NavigationBar = ({ user, onLoggedOut, setUser, setToken }) => {
+export const NavigationBar = ({ user, onLoggedOut, setUser, setToken, token, handleLogout}) => {
 
-    const handleLogout = () => {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        onLoggedOut(); // Optional: Call any additional logout logic if needed
-    };
+
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className="barnav">
             <Container>
                 <Navbar.Brand as={Link} to="/">
                     Film Flock
