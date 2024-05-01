@@ -199,7 +199,7 @@ export const MainView = () => {
   const toggleFavorite = async (movie) => {
     const storedToken = localStorage.getItem('token');
     const isFavorite = user.FavoriteMovies.includes(movie.id);
-    const method= isFavorite ? 'DELETE' : 'POST';
+    const method = isFavorite ? 'DELETE' : 'POST';
     const response = await fetch(`https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/${user._id}/favorites/${movie.id}`, {
       method: method,
       headers: {
@@ -220,11 +220,11 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar user={user} handleLogout={handleLogout} setUser={setUser} setToken={setToken}/>
+      <NavigationBar user={user} handleLogout={handleLogout} setUser={setUser} setToken={setToken} />
       <Routes>
         <Route path="/login" element={!user ? <LoginView onLoggedIn={(user, token) => { setUser(user); setToken(token); }} /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={!user ? <SignupView /> : <Navigate to="/" replace />} />
-        <Route path="/profile" element={user ? <ProfileView user={user} setUser={setUser} movies={movies} /> : <Navigate to="/login" replace />} />
+        <Route path="/profile" element={user ? <ProfileView user={user} setUser={setUser} movies={movies} setSelectedMovie={setSelectedMovie}  /> : <Navigate to="/login" replace />} />
         <Route path="/" element={user ? (
           <>
             {selectedMovie ? (
