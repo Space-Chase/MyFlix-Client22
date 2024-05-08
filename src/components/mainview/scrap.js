@@ -851,3 +851,5 @@ export const ProfileView = ({ user, setUser, movies }) => {
 */
 
 //END OF PROFILE VIEW
+
+

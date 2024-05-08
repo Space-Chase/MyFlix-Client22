@@ -4,6 +4,7 @@ import { MovieView } from "../movieview/MovieView";
 import { LoginView } from "../loginview/LoginView";
 import { SignupView } from "../signupview/SignUpView";
 import { ProfileView } from "../profile-view/profile-view";
+import { FilterView } from "../Filter-View/FilterView";
 import { Button } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
@@ -75,6 +76,24 @@ export const MainView = () => {
       }, 2000); 
     }
   };
+
+  return (
+    <Container>
+      {/* Display FilterView component for filtering movies by genre */}
+      <FilterView movies={movies} onMovieClick={handleMovieClick} />
+
+      {/* Display selected movie in MovieView component */}
+      {selectedMovie && (
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setSelectedMovie(null)}
+        />
+      )}
+    </Container>
+  );
+
+  // Remove the extra closing curly brace
+  // };
 
   return (
     <BrowserRouter>
