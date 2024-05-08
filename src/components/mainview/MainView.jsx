@@ -67,6 +67,8 @@ export const MainView = () => {
       },
     });
 
+    
+
     if (response.ok) {
       const updatedUser = await response.json();
       setUser(updatedUser);
@@ -76,28 +78,12 @@ export const MainView = () => {
       }, 2000); 
     }
   };
-
-  return (
-    <Container>
-      {/* Display FilterView component for filtering movies by genre */}
-      <FilterView movies={movies} onMovieClick={handleMovieClick} />
-
-      {/* Display selected movie in MovieView component */}
-      {selectedMovie && (
-        <MovieView
-          movie={selectedMovie}
-          onBackClick={() => setSelectedMovie(null)}
-        />
-      )}
-    </Container>
-  );
-
-  // Remove the extra closing curly brace
-  // };
+  
 
   return (
     <BrowserRouter>
       <NavigationBar user={user} handleLogout={handleLogout} setUser={setUser} setToken={setToken} />
+      <FilterView movies={movies} onMovieClick={setSelectedMovie} />
       <Routes>
         <Route path="/login" element={!user ? <LoginView onLoggedIn={(user, token) => { setUser(user); setToken(token); }} /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={!user ? <SignupView /> : <Navigate to="/" replace />} />
@@ -141,3 +127,4 @@ export const MainView = () => {
     </BrowserRouter>
   );
 };
+
