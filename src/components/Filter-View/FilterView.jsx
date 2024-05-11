@@ -1,28 +1,3 @@
-/*import React, { useState, useEffect } from 'react';
-import { Button, Card, Container, Row, Col, Form, Alert } from "react-bootstrap";
-import { MovieCard } from "../moviecard/MovieCard";
-import { MovieView } from "../movieview/MovieView";
-
-export const FilterView = ({ movies, onMovieClick, genre }) => {
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  
-
-  const filteredMovies = movies.filter(movie => movie.genre === genre);
-
-  return (
-    <Container>
-        <Button onClick={() => setSelectedMovie(null)}>Genre</Button>
-      <Row>
-        {filteredMovies.map(movie => (
-          <Col xl={12} md={11} className="d-flex justify-content-center" key={movie.id}>
-            <MovieCard movie={movie} onMovieClick={onMovieClick} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
-  );
-} */
-
 import React, { useState } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { MovieCard } from '../moviecard/MovieCard';
@@ -38,24 +13,25 @@ export const FilterView = ({ movies, onMovieClick }) => {
   // Filter movies based on selected genre
   const filteredMovies = selectedGenre ? movies.filter(movie => movie.genre === selectedGenre) : movies;
 
+  let genreList = [...new Set(movies.map(movie => movie.genre))];
+
   return (
     <Container>
       {/* Display genre buttons */}
-      <Row className="mb-3">
+      <Row className="mb-3 d-flex flex-column justify-content-center align-items-start">
         <Col>
           <Button variant="outline-primary" onClick={() => filterMoviesByGenre(null)}>All</Button>
-          <Button variant="outline-primary" onClick={() => filterMoviesByGenre('Action')}>Action</Button>
-          <Button variant="outline-primary" onClick={() => filterMoviesByGenre('Romance')}>Romance</Button>
-          <Button variant="outline-primary" onClick={() => filterMoviesByGenre('Drama')}>Drama</Button>
-          <Button variant="outline-primary" onClick={() => filterMoviesByGenre('Comedy')}>Comedy</Button>
-          <Button variant="outline-primary" onClick={() => filterMoviesByGenre('Thriller')}>Thriller</Button>
+
+          {genreList.map((genre) => (
+            <Button variant="outline-primary" onClick={() => filterMoviesByGenre(genre)}>{genre}</Button>
+          ))}
         </Col>
       </Row>
 
       {/* Display filtered movies */}
       <Row>
         {filteredMovies.map(movie => (
-          <Col xl={3} md={4} sm={6} key={movie.id}>
+          <Col xl={3} md={12} sm={6} key={movie.id}>
             <MovieCard movie={movie} onMovieClick={onMovieClick} />
           </Col>
         ))}

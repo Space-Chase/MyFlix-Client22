@@ -6,7 +6,7 @@ export const NavigationBar = ({ user, onLoggedOut, setUser, setToken, token, han
 
 
     return (
-        <Navbar bg="light" expand="lg" className="barnav">
+        <Navbar bg="" expand="lg" className="barnav">
             <Container>
                 <Navbar.Brand as={Link} to="/">
                     Film Flock

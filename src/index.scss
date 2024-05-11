@@ -2,7 +2,7 @@ $primary: rgb(47, 71, 119);
 $body-bg-start: rgb(146, 121, 97);
 $body-bg-end: rgb(183, 164, 126);
 $theme-colors: (
-  "secondary": rgb(205, 220, 154),
+  "secondary": rgb(248, 252, 0),
   "primary": rgb(0, 0, 0),
 );
 
@@ -43,3 +43,18 @@ h6 {
   text-decoration: underline;
 }
 
+.btn-outline-primary {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+
+.barnav {
+  background-color: rgb(255, 255, 255);
+  border-color: black;
+  border-radius: 3PX;
+  border-width: 1px;
+}
+
+.form-control {
+background-color: rgb(255, 255, 255);
+}

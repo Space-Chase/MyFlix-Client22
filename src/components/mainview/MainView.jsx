@@ -67,7 +67,7 @@ export const MainView = () => {
       },
     });
 
-    
+
 
     if (response.ok) {
       const updatedUser = await response.json();
@@ -75,19 +75,18 @@ export const MainView = () => {
       setNotification("Movie added to favorites!");
       setTimeout(() => {
         setNotification(null);
-      }, 2000); 
+      }, 2000);
     }
   };
-  
+
 
   return (
     <BrowserRouter>
       <NavigationBar user={user} handleLogout={handleLogout} setUser={setUser} setToken={setToken} />
-      <FilterView movies={movies} onMovieClick={setSelectedMovie} />
       <Routes>
         <Route path="/login" element={!user ? <LoginView onLoggedIn={(user, token) => { setUser(user); setToken(token); }} /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={!user ? <SignupView /> : <Navigate to="/" replace />} />
-        <Route path="/profile" element={user ? <ProfileView user={user} setUser={setUser} movies={movies} setSelectedMovie={setSelectedMovie}  /> : <Navigate to="/login" replace />} />
+        <Route path="/profile" element={user ? <ProfileView user={user} setUser={setUser} movies={movies} setSelectedMovie={setSelectedMovie} /> : <Navigate to="/login" replace />} />
         <Route path="/" element={user ? (
           <>
             {selectedMovie ? (
@@ -95,19 +94,12 @@ export const MainView = () => {
                 movie={selectedMovie}
                 onBackClick={() => setSelectedMovie(null)}
                 onFavoriteClick={(movie) => toggleFavorite(movie)}
-                isFavorite={user.FavoriteMovies.includes(selectedMovie.id)}
-              />
+                isFavorite={user.FavoriteMovies.includes(selectedMovie.id)} />
             ) : movies.length === 0 ? (
               <div>The list is empty!</div>
             ) : (
               <div>
-                {movies.map((movie) => (
-                  <MovieCard
-                    key={movie.id}
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
-                  />
-                ))}
+                <FilterView movies={movies} onMovieClick={setSelectedMovie}/>
               </div>
             )}
             <div className="d-flex justify-content-center mt-3">
