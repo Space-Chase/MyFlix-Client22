@@ -13,7 +13,7 @@ export const LoginView = ({ onLoggedIn }) => {
         Password: password
       };
 
-      const response = await fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/login",'https://inspiring-daifuku-818a09.netlify.app', {
+      const response = await fetch("https://nameless-basin-66959-08ab77b73096.herokuapp.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
